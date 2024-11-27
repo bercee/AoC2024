@@ -1,11 +1,14 @@
 package com.chemaxon;
 
 public class Main {
+
+    private static final String ASSETS = "assets/";
+
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        new Downloader("2022", "3").checkAndDownload();
+    }
 
-        var my = new MyClass(5);
-        System.out.println(my.getId());
-
+    public static String getInputFile(String year, String day) {
+        return ASSETS + "input_" + year + "_day_" + day;
     }
 }

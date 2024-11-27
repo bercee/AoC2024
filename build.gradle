@@ -5,11 +5,22 @@ plugins {
 group = 'com.chemaxon'
 version = '1.0-SNAPSHOT'
 
+ext {
+    year='2022'
+    day='11'
+}
+
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    implementation 'org.slf4j:slf4j-api:2.0.15'
+    implementation 'ch.qos.logback:logback-classic:1.5.12'
+
+
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
@@ -23,4 +34,6 @@ tasks.register('runMainClass', JavaExec) {
     description = "Run the main class with JavaExecTask"
     classpath = sourceSets.main.runtimeClasspath
     mainClass = 'com.chemaxon.Main'
+    systemProperty 'year', project.findProperty('year')
+    systemProperty 'day', project.findProperty('day')
 }

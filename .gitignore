@@ -4,9 +4,11 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+session_id.txt
+assets
+
 
 ### IntelliJ IDEA ###
-/.idea/
 .idea
 *.iws
 *.iml
