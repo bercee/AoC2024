@@ -1,5 +1,7 @@
 package com.chemaxon;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,19 +15,19 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 
-public class Downloader {
+public class Connector {
     private final String year;
     private final String day;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Downloader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Connector.class);
 
 
-    public Downloader(String year, String day) {
+    public Connector(String year, String day) {
         this.year = year;
         this.day = day;
     }
 
-    public void checkAndDownload() {
+    public void downloadInputIfMissing() {
         File file = new File(Main.getInputFile(year, day));
         try {
             if (!file.exists() && file.createNewFile()) {
@@ -38,11 +40,36 @@ public class Downloader {
         }
     }
 
+    public void submit(int part, String answer) {
+        try (HttpClient client = HttpClient.newHttpClient()) {
+            LOGGER.info(getAnswerURL());
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(getAnswerURL()))
+                    .header("Accept-language", "en-US,en;q=0.9")
+                    .header("Cookie", "session=" + getSessionID())
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .POST(HttpRequest.BodyPublishers.ofString("level="+part+"&answer="+answer))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            LOGGER.info("Answer to solution: {}", response.statusCode());
+            var doc = Jsoup.parse(response.body());
+            var message = doc.select("body > main > article").text();
+            LOGGER.info("Answer to solution: {}", message);
+        } catch (URISyntaxException | IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String getAnswerURL() {
+        return "https://adventofcode.com/" + year + "/day/" + day + "/answer";
+    }
+
+
     private String downloadInput() {
         LOGGER.info("Downloading input for year {} day {}", year, day);
         try (var client = HttpClient.newHttpClient()) {
             var request = HttpRequest.newBuilder()
-                    .uri(new URI(getURL()))
+                    .uri(new URI(getInputURL()))
                     .header("Accept-language", "en-US,en;q=0.9")
                     .header("Cookie", "session=" + getSessionID())
                     .GET()
@@ -65,7 +92,7 @@ public class Downloader {
         }
     }
 
-    private String getURL() {
+    private String getInputURL() {
         return "https://adventofcode.com/" + year + "/day/" + day + "/input";
     }
 

@@ -5,7 +5,7 @@ public class Main {
     private static final String ASSETS = "assets/";
 
     public static void main(String[] args) {
-        new Downloader("2022", "3").checkAndDownload();
+        new Connector("2022", "16").submit(1, "posdijf");
     }
 
     public static String getInputFile(String year, String day) {
