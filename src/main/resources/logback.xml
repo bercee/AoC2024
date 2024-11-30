@@ -1,0 +1,21 @@
+<configuration>
+    <!-- Console appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- Pattern with colors -->
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %highlight(%msg) %n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root logger -->
+    <root level="debug">
+        <appender-ref ref="CONSOLE" />
+    </root>
+
+    <!-- Example: Logger for specific packages -->
+    <logger name="com.example.myapp" level="info">
+        <appender-ref ref="CONSOLE" />
+    </logger>
+</configuration>

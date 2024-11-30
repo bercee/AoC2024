@@ -6,8 +6,8 @@ group = 'com.chemaxon'
 version = '1.0-SNAPSHOT'
 
 ext {
-    year='2022'
-    day='11'
+    year='2020'
+    day='1'
 }
 
 
@@ -38,4 +38,5 @@ tasks.register('runMainClass', JavaExec) {
     mainClass = 'com.chemaxon.Main'
     systemProperty 'year', project.findProperty('year')
     systemProperty 'day', project.findProperty('day')
+    standardInput = System.in
 }
