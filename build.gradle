@@ -6,7 +6,7 @@ group = 'com.chemaxon'
 version = '1.0-SNAPSHOT'
 
 ext {
-    year='2020'
+    year='2024'
     day='1'
 }
 
