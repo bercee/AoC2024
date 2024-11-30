@@ -2,19 +2,19 @@ package com.chemaxon.solvers.year2020;
 
 import com.chemaxon.Solver;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Day1 extends Solver {
 
+    private List<Integer> nums;
+
     public Day1(List<String> input) {
         super(input);
+        nums = this.getInput().stream().map(Integer::parseInt).toList();
     }
 
     @Override
     public String solvePart1() {
-        var nums = this.getInput().stream().map(Integer::parseInt).toList();
         for (int i = 0; i < nums.size(); i++) {
             for (int j = 0; j < i; j++) {
                 if (nums.get(i) + nums.get(j) == 2020) {
@@ -27,6 +27,18 @@ public class Day1 extends Solver {
 
     @Override
     public String solvePart2() {
+        for (int i = 0; i < nums.size(); i++) {
+            for (int j = 0; j < i; j++) {
+                for (int k = 0; k < j; k++) {
+                    var ii = nums.get(i);
+                    var jj = nums.get(j);
+                    var kk = nums.get(k);
+                    if (ii + jj + kk == 2020) {
+                        return Integer.toString(ii * jj * kk);
+                    }
+                }
+            }
+        }
         return "";
     }
 }
