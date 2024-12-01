@@ -16,4 +16,17 @@ public abstract class Solver {
     public abstract String solvePart1();
 
     public abstract String solvePart2();
+
+
+    protected String convert(int answer) {
+        return "" + answer;
+    }
+
+    protected String convert(double answer) {
+        return "" + answer;
+    }
+
+    protected String convertAsInt(double answer) {
+        return "" + (int) answer;
+    }
 }
