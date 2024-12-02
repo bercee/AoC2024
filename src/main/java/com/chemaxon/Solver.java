@@ -26,6 +26,10 @@ public abstract class Solver {
         return "" + answer;
     }
 
+    protected String convert(long answer) {
+        return "" + answer;
+    }
+
     protected String convertAsInt(double answer) {
         return "" + (int) answer;
     }

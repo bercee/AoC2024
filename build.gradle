@@ -7,7 +7,7 @@ version = '1.0-SNAPSHOT'
 
 ext {
     year='2024'
-    day='1'
+    day='2'
 }
 
 
@@ -21,6 +21,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.18.2'
 
     implementation 'org.apache.commons:commons-math3:3.6.1'
+    implementation 'org.apache.commons:commons-lang3:3.17.0'
 
 
 
