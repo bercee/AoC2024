@@ -2,6 +2,8 @@ package com.chemaxon.solvers.year2024;
 
 import com.chemaxon.Parsers;
 import com.chemaxon.Solver;
+import com.chemaxon.utils.MatrixDirections;
+import com.chemaxon.utils.Point2D;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
@@ -14,8 +16,8 @@ public class Day6 extends Solver {
     private final int width;
     private final int height;
     private final String[][] map;
-    private final Point startP;
-    private final Dir startD = new Dir(-1, 0);
+    private final Point2D startP;
+    private final Point2D startD = MatrixDirections.UP;
 
 
     public Day6(List<String> input) {
@@ -27,11 +29,11 @@ public class Day6 extends Solver {
         map[startP.i()][startP.j()] = ".";
     }
 
-    private Point getStartPoint() {
+    private Point2D getStartPoint() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (map[i][j].equals("^")) {
-                    return new Point(i, j);
+                    return new Point2D(i, j);
                 }
             }
         }
@@ -67,20 +69,7 @@ public class Day6 extends Solver {
 
 }
 
-
-record Point(int i, int j) {
-    Point move(Dir d) {
-        return new Point(i + d.x(), j + d.y());
-    }
-}
-
-record Dir(int x, int y) {
-    Dir turn() {
-        return new Dir(y, -x);
-    }
-}
-
-record Positions(Point p, Dir dir) {
+record Positions(Point2D p, Point2D dir) {
 }
 
 enum Result {
@@ -92,18 +81,18 @@ class Simulation {
     final int h;
     final int w;
 
-    final Point startPoint;
-    final Dir startDir;
+    final Point2D startPoint;
+    final Point2D startDir;
 
 
-    Point currentPoint;
-    Dir currentDir;
+    Point2D currentPoint;
+    Point2D currentDir;
 
     Set<Positions> visitedPositions = new HashSet<>();
-    Set<Point> visitedPoints = new HashSet<>();
+    Set<Point2D> visitedPoints = new HashSet<>();
 
 
-    public Simulation(Point startPoint, Dir startDir, String[][] map) {
+    public Simulation(Point2D startPoint, Point2D startDir, String[][] map) {
         this.startPoint = startPoint;
         this.startDir = startDir;
         this.map = map;
@@ -114,26 +103,26 @@ class Simulation {
         this.currentDir = startDir;
     }
 
-    boolean isOutside(Point p) {
+    boolean isOutside(Point2D p) {
         return p.i() < 0 || p.i() >= h || p.j() < 0 || p.j() >= w;
     }
 
-    boolean isFree(Point p) {
+    boolean isFree(Point2D p) {
         return map[p.i()][p.j()].equals(".");
     }
 
     Result run() {
         visit();
         while (true) {
-            var next = currentPoint.move(currentDir);
+            var next = currentPoint.add(currentDir);
 
             if (isOutside(next)) {
                 return Result.OUTSIDE;
             }
 
             while (!isFree(next)) {
-                currentDir = currentDir.turn();
-                next = currentPoint.move(currentDir);
+                currentDir = currentDir.rotateClockwise90();
+                next = currentPoint.add(currentDir);
             }
             currentPoint = next;
 
