@@ -2,7 +2,6 @@ package com.chemaxon.solvers.year2024;
 
 import com.chemaxon.Solver;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,17 +29,31 @@ public class Day7 extends Solver {
     @Override
     public String solvePart1() {
         return convert(tests.stream()
-                .filter(t -> generateCombinations(t.nums.size() - 1, 2).stream()
-                        .anyMatch(combinations -> evalCombination(t.value, t.nums, combinations)))
+                .filter(t -> backtrack(t, new Operation[t.nums.size()-1], 2, 0))
                 .mapToLong(t -> t.value).sum());
     }
 
     @Override
     public String solvePart2() {
         return convert(tests.stream()
-                .filter(t -> generateCombinations(t.nums.size() - 1, 3).stream()
-                        .anyMatch(combinations -> evalCombination(t.value, t.nums, combinations)))
+                .filter(t -> backtrack(t, new Operation[t.nums.size()-1], 3, 0))
                 .mapToLong(t -> t.value).sum());
+    }
+
+    private boolean backtrack(Test t, Operation[] combination, int ops, int index) {
+        if (index == t.nums.size() - 1) {
+            return evalCombination(t.value, t.nums, combination);
+        }
+
+        for (int value = 0; value < ops; value++) {
+            combination[index] = value == 0 ? Operation.ADD : value == 1 ? Operation.MUL : Operation.CONCAT;
+            boolean result = backtrack(t, combination, ops, index + 1);
+            if (result) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private boolean evalCombination(long value, List<Long> nums, Operation[] combination) {
@@ -55,24 +68,5 @@ public class Day7 extends Solver {
             }
         }
         return sum == value;
-    }
-
-
-    private List<Operation[]> generateCombinations(int n, int ops) {
-        List<Operation[]> result = new ArrayList<>();
-        Operation[] combination = new Operation[n];
-        backtrack(result, combination, n, ops, 0);
-        return result;
-    }
-
-    private void backtrack(List<Operation[]> result, Operation[] combination, int n, int ops, int index) {
-        if (index == n) {
-            result.add(combination.clone());
-            return;
-        }
-        for (int value = 0; value < ops; value++) {
-            combination[index] = value == 0 ? Operation.ADD : value == 1 ? Operation.MUL : Operation.CONCAT;
-            backtrack(result, combination, n, ops, index + 1);
-        }
     }
 }
