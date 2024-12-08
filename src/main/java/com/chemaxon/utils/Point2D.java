@@ -6,6 +6,10 @@ public record Point2D(int i, int j) {
         return new Point2D(i + other.i, j + other.j);
     }
 
+    public Point2D subtract(Point2D other) {
+        return new Point2D(i - other.i, j - other.j);
+    }
+
     public Point2D multiply(int scalar) {
         return new Point2D(i * scalar, j * scalar);
     }
