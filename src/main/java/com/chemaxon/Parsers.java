@@ -36,4 +36,9 @@ public class Parsers {
     public static int[][] createIntArrays(List<String> lines, String regexPattern) {
         return lines.stream().map(l -> Arrays.stream(l.split(regexPattern)).mapToInt(Integer::parseInt).toArray()).toArray(int[][]::new);
     }
+
+    public static Integer[][] createIntegerArrays(List<String> lines) {
+        return Arrays.stream(createIntArrays(lines)).map(row -> Arrays.stream(row).boxed().toArray(Integer[]::new))
+                .toArray(Integer[][]::new);
+    }
 }
