@@ -28,4 +28,12 @@ public class Parsers {
     public static String[][] createStringArrays(List<String> lines, String regexPattern) {
         return lines.stream().map(l -> l.split(regexPattern)).toArray(String[][]::new);
     }
+
+    public static int[][] createIntArrays(List<String> lines) {
+        return createIntArrays(lines, "");
+    }
+
+    public static int[][] createIntArrays(List<String> lines, String regexPattern) {
+        return lines.stream().map(l -> Arrays.stream(l.split(regexPattern)).mapToInt(Integer::parseInt).toArray()).toArray(int[][]::new);
+    }
 }
