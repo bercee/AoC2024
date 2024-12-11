@@ -5,7 +5,7 @@ import com.chemaxon.Solver;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class MyBag<T> {
+class BagLong<T> {
     HashMap<T, Long> map = new HashMap<>();
 
     void add(T t) {
@@ -40,7 +40,7 @@ class MyBag<T> {
 }
 
 public class Day11 extends Solver {
-    MyBag<Long> bag = new MyBag<>();
+    BagLong<Long> bag = new BagLong<>();
 
     public Day11(List<String> input) {
         super(input);
@@ -63,7 +63,7 @@ public class Day11 extends Solver {
     }
 
     void blink2() {
-        var newBag = new MyBag<Long>();
+        var newBag = new BagLong<Long>();
         for (Long n : bag.map.keySet()) {
             var count = bag.getCount(n);
             var result = transform(n);
