@@ -29,42 +29,33 @@ public class Day12 extends Solver {
         }
 
         int getSides() {
-            var corners = getCorners();
-            var doubleCorners = getDoubleCorners();
-            LOGGER.info("region {} corners {} double c {}", letter, corners.size(), doubleCorners.size());
-            return corners.size() + doubleCorners.size() * 2;
+            return getPossibleCorners().stream().mapToInt(p -> isSingleCorner(p) ? 1 : isDoubleCorner(p) ? 2 : 0).sum();
         }
 
-        private Set<Point2D> getCorners() {
-            return points.stream()
-                    .flatMap(p -> Arrays.stream(CHECK_DIRS).map(check -> check.add(p)))
-                    .filter(p -> Arrays.stream(CORNER_DIRS).map(p::add).filter(points::contains).count() % 2 == 1)
-                    .collect(Collectors.toSet());
+        private boolean isSingleCorner(Point2D p) {
+            return Arrays.stream(CORNER_DIRS).map(p::add).filter(points::contains).count() % 2 == 1;
         }
 
-        private Set<Point2D> getDoubleCorners() {
-            Set<Point2D> corners = new HashSet<>();
-            for (Point2D point : points) {
-                for (Point2D check : Arrays.stream(CHECK_DIRS).map(point::add).toList()) {
-                    var cornerPoints = Arrays.stream(CORNER_DIRS).map(check::add).toList();
-                    var isContaineds = cornerPoints.stream().map(this.points::contains).toList();
-                    var isContainedCount = isContaineds.stream().filter(b -> b).count();
-                    if (isContainedCount == 2) {
-                        var idx1 = isContaineds.indexOf(true);
-                        var idx2 = isContaineds.lastIndexOf(true);
-                        var p1 = cornerPoints.get(idx1);
-                        var p2 = cornerPoints.get(idx2);
+        private boolean isDoubleCorner(Point2D p) {
+            var cornerPoints = Arrays.stream(CORNER_DIRS).map(p::add).toList();
+            var isContaineds = cornerPoints.stream().map(this.points::contains).toList();
+            var isContainedCount = isContaineds.stream().filter(b -> b).count();
+            if (isContainedCount == 2) {
+                var idx1 = isContaineds.indexOf(true);
+                var idx2 = isContaineds.lastIndexOf(true);
+                var p1 = cornerPoints.get(idx1);
+                var p2 = cornerPoints.get(idx2);
 
-                        var mainNeighbours = Arrays.stream(MatrixDirections.MAIN_DIRECTIONS).map(p1::add).toList();
-                        if (!mainNeighbours.contains(p2)) {
-                            LOGGER.info("tricky {} {}", letter, p1);
-                            corners.add(check);
-                        }
-                    }
-                }
+                var mainNeighbours = Arrays.stream(MatrixDirections.MAIN_DIRECTIONS).map(p1::add).toList();
+                return !mainNeighbours.contains(p2);
             }
 
-            return corners;
+            return false;
+
+        }
+
+        private Set<Point2D> getPossibleCorners() {
+            return points.stream().flatMap(p -> Arrays.stream(CHECK_DIRS).map(p::add)).collect(Collectors.toSet());
         }
 
 
