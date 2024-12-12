@@ -7,7 +7,7 @@ version = '1.0-SNAPSHOT'
 
 ext {
     year='2024'
-    day='11'
+    day='12'
 }
 
 
@@ -29,6 +29,9 @@ dependencies {
     implementation 'org.apache.commons:commons-geometry-spherical:1.0'
     implementation 'org.apache.commons:commons-geometry-io-core:1.0'
     implementation 'org.apache.commons:commons-geometry-io-euclidean:1.0'
+
+    implementation 'org.jgrapht:jgrapht-core:1.5.2'
+
 
 
 

@@ -43,4 +43,8 @@ public class MatrixMap<T> {
 
         return ret;
     }
+
+    public List<Point2D> getNeighhours(Point2D p, Point2D[] directions)  {
+        return Arrays.stream(directions).map(p::add).filter(this::isInside).toList();
+    }
 }
