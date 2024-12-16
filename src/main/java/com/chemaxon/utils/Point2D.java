@@ -11,6 +11,10 @@ public record Point2D(int i, int j) {
         return new Point2D(i, j);
     }
 
+    public int L1() {
+        return Math.abs(i) + Math.abs(j);
+    }
+
     public Point2D subtract(Point2D other) {
         return new Point2D(i - other.i, j - other.j);
     }

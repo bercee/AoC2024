@@ -18,7 +18,7 @@ public class Day10 extends Solver {
     public Day10(List<String> input) {
         super(input);
         map = new MatrixMap<>(Parsers.createIntegerArrays(input));
-        startPoints = map.filter(p -> p == 0);
+        startPoints = map.filterByValue(p -> p == 0);
     }
 
     @Override

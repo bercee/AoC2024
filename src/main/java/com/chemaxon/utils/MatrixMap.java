@@ -31,7 +31,7 @@ public class MatrixMap<T> {
         return get(p.i(), p.j());
     }
 
-    public Set<Point2D> filter(Predicate<? super T> predicate) {
+    public Set<Point2D> filterByValue(Predicate<? super T> predicate) {
         Set<Point2D> ret = new HashSet<>();
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -41,6 +41,19 @@ public class MatrixMap<T> {
             }
         }
 
+        return ret;
+    }
+
+    public Set<Point2D> filterByPosition(Predicate<Point2D> predicate) {
+        Set<Point2D> ret = new HashSet<>();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                var p = new Point2D(i, j);
+                if (predicate.test(p)) {
+                    ret.add(p);
+                }
+            }
+        }
         return ret;
     }
 

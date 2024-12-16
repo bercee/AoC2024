@@ -7,7 +7,7 @@ version = '1.0-SNAPSHOT'
 
 ext {
     year='2024'
-    day='15'
+    day='16'
 }
 
 
