@@ -120,10 +120,10 @@ public class Day17 extends Solver {
 //        2,4,1,1,7,5,4,4,1,4,0,3,5,5,3,0
 //
 //        2,4, //B = A%8
-//        1,1, //B = B ^ 1
+//        1,1, //B = B XOR 1
 //        7,5, //C = A / 2^B
-//        4,4, //B = B ^ C
-//        1,4, //B = B ^ 4
+//        4,4, //B = B XOR C
+//        1,4, //B = B XOR 4
 //        0,3, //A = A/8
 //        5,5, //prints B%8
 //        3,0  //jumps to the start if A > 0
