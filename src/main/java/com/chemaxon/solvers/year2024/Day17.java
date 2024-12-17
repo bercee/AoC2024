@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//SORRY NO REFACTOR TODAY EITHER. I AM IN A RUSH.
+
 public class Day17 extends Solver {
 
     record Output(long a, long b) {
@@ -114,6 +116,17 @@ public class Day17 extends Solver {
 
     @Override
     public String solvePart2() {
+
+//        2,4,1,1,7,5,4,4,1,4,0,3,5,5,3,0
+//
+//        2,4, //B = A%8
+//        1,1, //B = B ^ 1
+//        7,5, //C = A / 2^B
+//        4,4, //B = B ^ C
+//        1,4, //B = B ^ 4
+//        0,3, //A = A/8
+//        5,5, //prints B%8
+//        3,0  //jumps to the start if A > 0
 
 
         var reverseList =  this.input.reversed();
