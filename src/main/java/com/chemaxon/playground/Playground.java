@@ -14,9 +14,9 @@ import java.util.Random;
 public class Playground {
 
     public static void main(String[] args) {
-        int n = 5;
-        for (int i = -15; i < 15; i++) {
-            System.out.println(((i % n) + n) % n);
-        }
+        System.out.println("one2one".replaceAll("one", "1"));
+
     }
+
+
 }
