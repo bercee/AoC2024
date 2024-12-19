@@ -9,45 +9,19 @@ public class Day19 extends Solver {
     Set<String> patternSet;
     List<String> targets;
 
-    Set<String> knownNonTargets = new HashSet<>();
     Map<String, Long> memo = new HashMap<>();
 
     static class Num {
         long n = 0;
     }
 
-
     public Day19(List<String> input) {
         super(input);
         patternSet = new HashSet<>(Arrays.stream(input.getFirst().split(", ")).toList());
         targets = input.subList(2, input.size());
 
-
-        //fill memo
+        //fill memo (run backtrack)
         targets.forEach(t -> this.backtrack(t, new Num()));
-
-    }
-
-    boolean backtrack(String target) {
-        if (knownNonTargets.contains(target)) {
-            return false;
-        }
-
-        if (patternSet.contains(target)) {
-            return true;
-        }
-
-        for (String pattern : patternSet) {
-            if (target.startsWith(pattern)) {
-                 if(backtrack(target.substring(pattern.length()))) {
-                     return true;
-                 } else {
-                     knownNonTargets.add(target);
-                 }
-            }
-        }
-
-        return false;
     }
 
 
@@ -62,7 +36,6 @@ public class Day19 extends Solver {
 
         if (promising.isEmpty()) {
             memo.put(target, 0L);
-//            LOGGER.info("non-targets: {}, {}", knownNonTargets.size(), knownNonTargets);
             return;
         }
 
@@ -70,7 +43,6 @@ public class Day19 extends Solver {
             var remaining = target.substring(pattern.length());
             if (remaining.isEmpty()) {
                 found.n++;
-//                LOGGER.info("found one");
             } else {
                 backtrack(remaining, found);
             }
