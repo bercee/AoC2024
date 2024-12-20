@@ -1,5 +1,9 @@
 package com.chemaxon.utils;
 
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public record Point2D(int i, int j) {
 
     public Point2D add(Point2D other) {
@@ -33,5 +37,9 @@ public record Point2D(int i, int j) {
 
     public Point2D rotateCounterClockwise90() {
         return new Point2D(-j, i);
+    }
+
+    public Set<Point2D> map(Collection<Point2D> deltas) {
+        return deltas.stream().map(this::add).collect(Collectors.toSet());
     }
 }
