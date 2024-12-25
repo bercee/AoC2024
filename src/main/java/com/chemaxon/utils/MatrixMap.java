@@ -1,5 +1,6 @@
 package com.chemaxon.utils;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -57,7 +58,30 @@ public class MatrixMap<T> {
         return ret;
     }
 
-    public List<Point2D> getNeighhours(Point2D p, Point2D[] directions)  {
+    public List<Point2D> getNeighhours(Point2D p, Point2D[] directions) {
         return Arrays.stream(directions).map(p::add).filter(this::isInside).toList();
+    }
+
+    public List<T> getRow(int row) {
+        if (row < 0 || row >= height) {
+            return null;
+        }
+
+        return Arrays.stream(matrix[row]).toList();
+    }
+
+    public List<T> getColumn(int column) {
+        if (column < 0 || column >= width) {
+            return null;
+        }
+
+
+        List<T> list = new ArrayList<>();
+        for (int i = 0; i < height; i++) {
+            list.add(matrix[i][column]);
+        }
+
+        return list;
+
     }
 }

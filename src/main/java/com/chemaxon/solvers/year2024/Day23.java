@@ -2,6 +2,7 @@ package com.chemaxon.solvers.year2024;
 
 import com.chemaxon.Solver;
 import org.jgrapht.Graph;
+import org.jgrapht.alg.clique.BronKerboschCliqueFinder;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.jsoup.internal.StringUtil;
@@ -83,6 +84,11 @@ public class Day23 extends Solver {
 
     @Override
     public String solvePart2() {
+        //YES, this would have been much easier :) but i implemented it for myself :D
+        BronKerboschCliqueFinder<String, DefaultEdge> cliqueFinder = new BronKerboschCliqueFinder<>(graph);
+        var it = cliqueFinder.maximumIterator();
+
+
         List<Set<String>> completeSubgraphs = new ArrayList<>();
         for (String s : new HashSet<>(graph.vertexSet())) {
             var neighbors = getNeighbors(s);

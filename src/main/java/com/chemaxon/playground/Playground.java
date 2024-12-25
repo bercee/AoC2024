@@ -7,16 +7,16 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Playground {
 
     public static void main(String[] args) {
-        System.out.println("one2one".replaceAll("one", "1"));
-        System.out.println(Integer.parseInt("1.1"));
-
+        Map<String, Integer> bag = new HashMap<>();
+        bag.merge("A", 1, Integer::sum);
+        bag.merge("B", 1, Integer::sum);
+        bag.merge("A", 1, Integer::sum);
+        System.out.println(bag);
     }
 
 
